@@ -1,5 +1,5 @@
 //import required modules
-const express=require('express'); // a web framework for node js 
+const express=require('express'); // a web framework for node js
 const mongoose=require('mongoose'); // a library for mongo db
 const cors=require('cors'); //acts as an middleware , it accesses API from different domain
 const bodyParser=require('body-parser'); //acts as a middleware and takes incoming requests
@@ -42,7 +42,7 @@ const transactionSchema= new mongoose.Schema({
     receiver_upi_id:{type:String,required:true},
     amount:{type:Number,required:true},
     timestamp:{type:Date,default:Date.now},
-    
+
 });
 //Create Transaction Model
 const Transaction=mongoose.model('Transaction',transactionSchema);
@@ -50,7 +50,7 @@ const Transaction=mongoose.model('Transaction',transactionSchema);
 //Function to generate an unique UPI id
 const generateUPI=()=>{
     //crypto generates unique id
-    const randomID=crypto.randomBytes(4).toString('hex'); //Generate a random 8-character ID
+    const randomId=crypto.randomBytes(4).toString('hex'); //Generate a random 8-character ID
     // '$' fetches random id in numbers
     return `${randomId}@fastpay`
 };
@@ -103,10 +103,10 @@ app.post('/api/login',async(req,res)=>{
 
         //Finding user by email
         const user =await User.findOne({email});
-        if(!user|| user.password!==passsword){
+        if(!user|| user.password!==password){
             return res.status(400).send({message:'Invalid credentials'});
         }
-        res.status(200).send({message:'login successful',upi_id:user.upi_id,balance:user_balance});
+        res.status(200).send({message:'login successful',upi_id:user.upi_id,balance:user.cobalance});
     } catch(error){
         console.error(error);
         res.status(500).send({message:'Server error'});
